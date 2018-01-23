@@ -19,6 +19,7 @@ class MotorEncoder:
         self.position = 0
 
     def cal_delta(self):
+        #This function calculates the delta of the previous and next rotations while preventing the count from overflowing  
         self.last_count = self.current_count
         self.current_count = self.timEncoder.counter()
         self.delta_count = self.current_count - self.last_count
@@ -27,11 +28,11 @@ class MotorEncoder:
         return int(self.delta_count)
 
     def zero(self):
-        self.position = 0
+        self.position = 0 #Zero function resets the postion back to 0
 
     def read(self):
         self.position = self.position + self.delta_count
-        return self.position
+        return self.position #Returns the current postion of motor rotation
 
 
         
