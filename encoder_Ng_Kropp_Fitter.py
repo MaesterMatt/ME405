@@ -12,7 +12,7 @@ class MotorEncoder:
     ''' Motor Encoder Class: Has a function to read and reset motor position counter '''
     def __init__(self):
         '''Creates a motor encoder by initializing GPIO pins and setting position to zero'''
-        self.pinB6 = pyb.Pin(pyb.Pin.board.PB6, pyb.Pin.IN, pull=pyb.Pin.PULL_NONE, af=2).   
+        self.pinB6 = pyb.Pin(pyb.Pin.board.PB6, pyb.Pin.IN, pull=pyb.Pin.PULL_NONE, af=2)   
         self.pinB7 = pyb.Pin(pyb.Pin.board.PB7, pyb.Pin.IN, pull=pyb.Pin.PULL_NONE, af=2)
         self.timEncoder = pyb.Timer(4, prescaler=0, period=0xffff)
         ch1 = self.timEncoder.channel(1, pyb.Timer.ENC_AB, pin=self.pinB6)
