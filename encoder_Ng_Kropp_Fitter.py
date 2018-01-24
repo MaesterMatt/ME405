@@ -1,5 +1,5 @@
 ##
-# This file contains a motor encoder which initializes and measures how far the motor has gone
+#    This file contains a motor encoder which initializes and measures how far the motor has gone
 
 import pyb
 import micropython
@@ -27,15 +27,17 @@ class MotorEncoder:
         self.current_count = self.timEncoder.counter()
         self.delta_count = self.current_count - self.last_count
         if abs(self.delta_count) > 32000:    ##encoder overflows at uint16 max, 65535
-            self.delta_count -= 65535*self.delta_count/abs(self.delta_count) #adjusts overflow by uint16 max
+            self.delta_count -= 65535*self.delta_count/abs(self.delta_count)    ##adjusts overflow by uint16 max
         return int(self.delta_count)
 
     def zero(self):
-        self.position = 0 #Resets the postion back to 0
+        '''This function zeros the position of the motor'''
+        self.position = 0   ##Resets the postion back to 0
 
     def read(self):
-        self.position = self.position + self.delta_count
-        return self.position #Returns the current postion of motor
+        '''This function calculates and returns the position of the motor'''
+        self.position = self.position + self.cal_delta()
+        return self.position    ##Returns the current postion of motor
 
 
         
