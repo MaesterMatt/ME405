@@ -5,7 +5,7 @@
 import pyb
 import micropython
 import time
-import encoder_Ng_Fitter as encode
+import encoder_Ng_Kropp_Fitter as encode
 import motor_Ng_Kropp_Fitter as driver
 
 __author__= "Matthew Ng, Eugene Kropp, Yavisht Fitter"
@@ -35,9 +35,11 @@ class MotorController:
         '''This function runs the control algorithm. Returns actuation signal.'''
         self.error = self.setpoint - self.enc.read()
         self.actuation_signal = self.kp*self.error    ##needs to be b/w 0-100
-        if error < 100:
+        if self.error < 100:
             self.actuation_signal = 0
         ##utime.sleep_ms(10)
-        motor.set_duty_cycle(self.actuation_signal)
+        self.motor.set_duty_cycle(42)
+        #self.motor.set_duty_cycle(self.actuation_signal)
+        print(self.actuation_signal)
         return self.actuation_signal
 

@@ -1,6 +1,3 @@
-##
-#    This file contains a motor encoder which initializes and measures how far the motor has gone
-
 import pyb
 import micropython
 import time

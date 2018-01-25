@@ -8,10 +8,9 @@ Date: January 11, 2018
 '''
 
 class MotorDriver:
-''' Motor Driver Class. Has a function to set duty cycle'''
+    ''' Motor Driver Class. Has a function to set duty cycle'''
     def __init__(self):
-    '''Creates a motor driver by initializing GPIO pins 
-    and turning the motor off for safety'''
+        '''Creates a motor driver on channel A by initializing GPIO pins and turning the motor off for safety'''
         print('Creating a motor driver')
 	##initialize pinA10 to motor enable with output open drain and pull up resistors enabled  
         self.pinA10 = pyb.Pin(pyb.Pin.board.PA10, pyb.Pin.OUT_OD, pull=pyb.Pin.PULL_UP, af=-1)
@@ -38,12 +37,12 @@ class MotorDriver:
         self.ch2 = self.tim3.channel(2, pyb.Timer.PWM, pin=self.pinB5)    
 
     def set_duty_cycle(self, level):
-    '''This method sets the duty cycle to be sent
-    to the motor to the given level. Positive values
-    cause torque in one direction, negative values
-    in the opposite direction.
-    @param level A signed integer holding the duty
-    cycle of the voltage sent to the motor '''
+        '''This method sets the duty cycle to be sent
+        to the motor to the given level. Positive values
+        cause torque in one direction, negative values
+        in the opposite direction.
+        @param level A signed integer holding the duty
+        cycle of the voltage sent to the motor '''
         self.pinA10.high()
         if level > 0:
             self.ch1.pulse_width_percent(level)    #spin clockwise
