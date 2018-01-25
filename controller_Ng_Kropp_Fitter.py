@@ -6,6 +6,7 @@ import pyb
 import micropython
 import time
 import encoder_Ng_Fitter as encode
+import motor_Ng_Kropp_Fitter as driver
 
 __author__= "Matthew Ng, Eugene Kropp, Yavisht Fitter"
 __date__= "January 25,2018"
@@ -16,7 +17,8 @@ class MotorController:
     def __init__(self, gain, location):
         '''Creates a motor controller by initializing gain and setpoint. @param gain does something. @param setpoint sets the desired location'''
         self.enc = encode.MotorEncoder()
-        self.kp = gain
+        self.motor = driver.MotorDriver()
+        self.kp = gain    ## units are %/encoder unit
         self.setpoint = location
         self.error = self.setpoint - self.enc.read()
         self.actuation_signal = self.kp*self.error
@@ -32,8 +34,10 @@ class MotorController:
     def do_work(self):
         '''This function runs the control algorithm. Returns actuation signal.'''
         self.error = self.setpoint - self.enc.read()
-        self.actuation_signal = self.kp*self.error
+        self.actuation_signal = self.kp*self.error    ##needs to be b/w 0-100
         if error < 100:
             self.actuation_signal = 0
+        ##utime.sleep_ms(10)
+        motor.set_duty_cycle(self.actuation_signal)
         return self.actuation_signal
 
