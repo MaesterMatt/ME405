@@ -17,7 +17,7 @@ def do_it(location, end):
 
 drv = driver.MotorDriver()
 enc = encode.MotorEncoder()
-ctr = controller.MotorController(.025, 7000)   ##Initializes controller with gain=1 and location = 50
+ctr = controller.MotorController(.04, 7000)   ##Initializes controller with gain=1 and location = 50
 while input() is not 'q':
     do_it(2750, 50)
 

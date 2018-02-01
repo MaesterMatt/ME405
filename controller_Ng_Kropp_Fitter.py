@@ -15,15 +15,24 @@ class MotorController:
 
     def __init__(self, gain, location):
         '''Creates a motor controller by initializing gain and setpoint. @param gain does something. @param setpoint sets the desired location'''
-        self.kp = gain    ## units are %/encoder unit
+        ## units are %/encoder unit
+        self.kp = gain            
+
+        ## location of desired position
         self.setpoint = location
+
+        ## error is final position - current position
         self.error = self.setpoint
+
+        ## which direction and how fast to turn the motor
         self.actuation_signal = self.kp*self.error
-        self.data = []
+
+        ## output data
+        self.data = ['time in ms, motor position in ticks\n']
 
     def set_setpoint(self, location):
         '''This function sets the setpoint'''
-        self.data = []
+        self.data = ['time in ms, motor position in ticks\n']
         self.setpoint = location
 
     def set_gain(self, gain):
@@ -31,6 +40,7 @@ class MotorController:
         self.kp = gain
 
     def err_calc(self, enc_read):
+        '''calculates error based on destination and encoder reading'''
         self.error = self.setpoint - enc_read
         return self.error
     
@@ -44,8 +54,10 @@ class MotorController:
         return self.actuation_signal
 
     def write_data(self):
-        self.data.append([utime.ticks_ms(), self.actuation_signal])
+        '''This function stores the time and the location which is determined by setpoint - error'''
+        self.data.append('{},{}\n'.format(utime.ticks_ms(), self.setpoint - self.error))
 
     def return_data(self):
+        '''Returns the stored data'''
         return self.data
 
